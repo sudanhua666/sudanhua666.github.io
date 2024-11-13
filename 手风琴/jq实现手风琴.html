@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    ul li {
+      list-style: none;
+    }
+
+    #main {
+      width: 100%;
+      height: 260px;
+      margin: 40px 20px;
+      overflow: hidden;
+    }
+
+    .top {
+      width: 100%;
+    }
+
+    #main ul li {
+      width: 200px;
+      height: 260px;
+      float: left;
+      position: relative;
+    }
+
+    #main ul li div {
+      width: 100%;
+      height: 260px;
+    }
+
+    #main ul li div.des {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: rgba(0, 0, 0, .3);
+
+    }
+
+    #main ul li div.des h4 {
+      color: #FFF;
+      font-size: 30px;
+      padding: 30px;
+      width: 30px;
+      margin: 0 auto;
+
+    }
+  </style>
+  <script src="../jq/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="main">
+    <ul>
+      <li>
+        <div class="des">
+          <h4>园林酒店</h4>
+        </div>
+        <div style="background: url(img/1.png) center;"></div>
+      </li>
+      <li>
+        <div class="des">
+          <h4>设计师酒店</h4>
+        </div>
+        <div style="background: url(img/2.png) center;"></div>
+      </li>
+      <li>
+        <div class="des">
+          <h4>青年旅社</h4>
+        </div>
+        <div style="background: url(img/3.png) center;"></div>
+      </li>
+      <li>
+        <div class="des">
+          <h4>特色客栈</h4>
+        </div>
+        <div style="background: url(img/4.png) center;"></div>
+      </li>
+      <li>
+        <div class="des">
+          <h4>海岛酒店</h4>
+        </div>
+        <div style="background: url(img/5.png) center;"></div>
+      </li>
+      <li>
+        <div class="des">
+          <h4>海外温泉</h4>
+        </div>
+        <div style="background: url(img/6.png) center;"></div>
+      </li>
+    </ul>
+  </div>
+</body>
+<script>
+  var $lis = $('ul li');
+  $lis.each(function (index) {
+    console.log($(this), index);
+
+    // 当鼠标移入时
+    $(this).on('mouseenter', function () {
+      // $('h4').css('display', 'none')
+      $(this).animate({
+        width: '400px'
+      },500);
+    });
+
+    // 当鼠标移出时
+    $(this).on('mouseleave', function () {
+      // $('h4').css('display', 'block')
+      $(this).stop().animate({
+        width: '200px'
+      }, 500);
+    });
+  });
+
+
+  
+</script>
+
+</html>

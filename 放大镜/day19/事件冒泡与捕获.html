@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .big {
+    width: 400px;
+    height: 400px;
+    background-color: #ccc;
+  }
+
+  .small {
+    width: 200px;
+    height: 200px;
+    background-color: #f00;
+  }
+
+  .box {
+    width: 100px;
+    height: 100px;
+    background-color: #00f;
+  }
+</style>
+
+<body>
+  <div class="big">big
+    <div class="small">small
+      <div class="box">box</div>
+    </div>
+  </div>
+  <script>
+    var box = document.querySelector('.box');
+    var small = document.querySelector('.small');
+    var big = document.querySelector('.big');
+    
+
+    small.addEventListener(
+      'click',
+      function (e) {
+        console.log('small');
+
+
+      },
+      true
+    )
+    big.addEventListener(
+        'click',
+        function (e) {
+          console.log('big');
+
+
+        },
+        true
+      )
+    box.addEventListener(
+      'click',
+      function (e) {
+        console.log('box');
+
+
+      },
+      false
+    )
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .box {
+      display: flex;
+    }
+
+    .box1 {
+      width: 400px;
+      height: 400px;
+      position: relative;
+    }
+
+    .box1 img {
+      width: 100%;
+    }
+
+    .libiao {
+      width: 400px;
+      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .libiao img {
+      width: 60px;
+      height: 60px;
+      display: block;
+    }
+
+    .mask {
+      width: 100px;
+      height: 100px;
+      background-image: url('images/mask-bg.png');
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+
+    .mask:hover {
+      cursor: zoom-in;
+    }
+
+    .box2 {
+      width: 400px;
+      height: 400px;
+      box-shadow: 0 0 20px rgba(106, 100, 100, 0.5);
+      overflow: hidden;
+      margin-left: 20px;
+      position: relative;
+    }
+
+    .box2 img {
+      width: 400%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .cover {
+      border: 2px solid red;
+    }
+
+    select {
+      margin-left: 120px;
+      margin-top: 120px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="box1">
+      <img src="images/banner1.jpg" alt="">
+      <div class="mask"></div>
+      <ul class="libiao">
+        <li><img src="images/banner1.jpg" alt=""></li>
+        <li><img src="images/banner2.jpg" alt=""></li>
+        <li><img src="images/banner3.jpg" alt=""></li>
+        <li><img src="images/banner4.jpg" alt=""></li>
+        <li><img src="images/banner5.jpg" alt=""></li>
+      </ul>
+    </div>
+    <div class="box2">
+      <img src="images/banner1.jpg" alt="">
+    </div>
+  </div>
+  <div>
+    <select name="" id="">
+      <option value="">请选择</option>
+      <option value="2">2</option>
+      <option value="4" selected>4</option>
+    </select>
+    <span class="p">放大倍数</span>
+  </div>
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var p = document.querySelector(".p");
+    var select = document.querySelector("select");
+    var beishu = select.value; // 初始化 beishu
+
+    select.onchange = function () {
+      beishu = this.value; // 更新 beishu 变量
+      console.log(beishu); // 输出到控制台
+      p.innerText = `放大倍数: ${beishu}`; // 更新 span 文本
+    };
+
+    var libiao = document.querySelector('.libiao');
+    var targetImg = document.querySelector('.box1 > img');
+    var targetImg2 = document.querySelector('.box2 > img'); // 确保选择正确的img元素
+
+    // 获取所有图片
+    var imgs = libiao.querySelectorAll('img');
+
+    libiao.addEventListener('mouseover', function (e) {
+      if (e.target.tagName.toLowerCase() === 'img') {
+        // 清除所有图片的'cover'类
+        imgs.forEach(item => item.classList.remove('cover'));
+        // 添加'cover'类到当前目标
+        e.target.classList.add('cover');
+        // 更新目标img元素的src
+        targetImg.src = e.target.src;
+        targetImg2.src = e.target.src;
+      }
+    });
+
+    var box1 = document.querySelector('.box1');
+    var mask = document.querySelector('.mask');
+
+    box1.addEventListener('mouseover', function (event) {
+      var x = event.clientX - box1.offsetLeft;
+      var y = event.clientY - box1.offsetTop;
+
+      var maskX = x - (4/beishu *50);
+      var maskY = y - (4 /beishu * 50);
+
+      if (maskX < 0) {
+        maskX = 0;
+      }
+      if (maskX > box1.offsetWidth - mask.offsetWidth) {
+        maskX = box1.offsetWidth - mask.offsetWidth;
+      }
+      if (maskY < 0) {
+        maskY = 0;
+      }
+      if (maskY > box1.offsetHeight - mask.offsetHeight) {
+        maskY = box1.offsetHeight - mask.offsetHeight;
+      }
+
+      mask.style.left = maskX + 'px';
+      mask.style.top = maskY + 'px';
+
+      targetImg2.style.left = -maskX *  beishu + 'px';
+      targetImg2.style.top = -maskY * beishu + 'px';
+    });
+  });
+</script>
+
+</html>

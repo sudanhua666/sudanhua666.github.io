@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src='../jq/jquery.min.js'></script>
+  <style>
+    .box {
+      border: 1px solid black;
+      width: 400px;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .bot {
+      display: flex;
+    }
+
+    .top>input {
+      width: 390px;
+    }
+
+    .undone,
+    .done {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="header">日程表</div>
+    <div class="top">
+      <input type="text">
+    </div>
+    <div class="bot">
+      <div class="undone">
+        <p>未完成</p>
+      </div>
+
+      <div class="done">
+        <p>已完成</p>
+      </div>
+    </div>
+
+  </div>
+</body>
+<script>
+  var $inp = $(".top input")
+  //键盘事件
+  $inp.keydown(function (e) {
+    if (e.keyCode == 13 && $inp.val() !== '') {
+      console.log($(this).val());
+      var $undone = $(".undone")
+
+      $undone.append("<span>" + $(this).val() + "</span>")
+
+      $(this).val("")
+      var $span = $(".undone span")
+
+      $span.css({
+        border: '1px solid black',
+        marginRight: '5px',
+
+      })
+      //点击事件
+      $span.click(function () {
+        $span.remove()
+        console.log(1);
+
+        var $done = $(".done")
+        $done.append("<span>" + $(this).text() + "×" + "</span>")
+        $('.done span').css('border', '1px solid black')
+        $('.done span').click(function () {
+          $(this).remove()
+        })
+
+      })
+
+    }
+  })
+
+</script>
+
+</html>

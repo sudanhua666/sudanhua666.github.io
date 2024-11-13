@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>简易商品管理系统</title>
+  <script src="../jq/jquery.min.js"></script>
+  <style>
+    /* 页面基本样式 */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    /* 标题居中 */
+    h1 {
+      text-align: center;
+    }
+
+    /* 表单布局 */
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    /* 输入框样式 */
+    input[type="text"],
+    input[type="number"],
+    input[type="file"] {
+      width: 300px;
+      margin: 5px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    /* 按钮样式 */
+    button {
+      padding: 10px;
+      margin: 5px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    /* 按钮悬停效果 */
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* 表格样式 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    /* 表格单元格样式 */
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    /* 表格表头背景色 */
+    th {
+      background-color: #f2f2f2;
+    }
+
+    /* 图片大小限制 */
+    img {
+      max-width: 50px;
+      max-height: 50px;
+    }
+
+    /* 总库存字体加粗 */
+    #totalStock {
+      font-weight: bold;
+    }
+
+    /* 搜索框宽度 */
+    #searchInput {
+      width: calc(50% - 10px);
+    }
+
+    /* 搜索按钮宽度 */
+    #searchButton {
+      width: calc(50% - 10px);
+    }
+
+    /* 删除按钮样式 */
+    .delete {
+      background-color: #dc3545;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    /* 删除按钮悬停效果 */
+    .delete:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>简易商品管理系统</h1>
+  <form id="productForm">
+    名称:<input type="text" id="name">
+    价格:<input type="number" id="price">
+    库存:<input type="number" id="stock">
+    图片:<input type="file" id="fileInput" accept="image/*">
+    <button type="button" id="addButton">添加商品</button>
+  </form>
+
+  <input type="text" id="searchInput" placeholder="输入商品名称搜索">
+  <button type="button" id="searchButton">搜索商品</button>
+  <table id="productTable">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th>价格</th>
+        <th>库存</th>
+        <th>预览</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div>Total Stock: <span id="totalStock">0</span></div>
+  <script>
+    $(document).ready(function () {
+      var products = []; // 存储商品信息的数组
+      var totalStock = 0; // 总库存量
+      
+      
+
+      // 添加商品按钮点击事件处理
+      $('#addButton').click(function () {
+        var name = $('#name').val().trim(); // 获取并去除名称输入框两端的空白字符
+        var price = parseFloat($('#price').val()); // 获取价格输入框的值，并转换为浮点数
+        var stock = parseInt($('#stock').val(), 10); // 获取库存输入框的值，并转换为整数
+        var fileInput = $('#fileInput')[0]; // 获取文件输入控件的原生 DOM 对象
+        var imageFile = fileInput.files[0]; // 获取用户选择的文件
+
+        if (!name || isNaN(price) || isNaN(stock)) { // 检查输入是否有效
+          alert("请输入有效的商品信息！");
+          return;
+        }
+        
+
+        // 创建一个 FileReader 对象来读取文件
+        var reader = new FileReader();
+        reader.onloadend = function () { // 文件读取完成后的回调函数
+          var imageUrl = reader.result; // 文件读取后得到的 URL
+
+          // 添加商品到数组
+          products.push({
+            name: name,
+            price: price,
+            stock: stock,
+            imageUrl: imageUrl
+          });
+
+          // 更新总库存
+          totalStock += stock;
+          $('#totalStock').text(totalStock);
+
+          // 清空输入框
+          $('#name, #price, #stock').val('');
+
+          // 动态添加表格行
+          addProductRow(products.length - 1);
+        };
+
+        if (imageFile) { // 如果用户选择了文件
+          reader.readAsDataURL(imageFile); // 读取文件并转换为 URL
+        } else {
+          alert("请选择一张图片！");
+        }
+      });
+
+      // 搜索商品按钮点击事件处理
+      $('#searchButton').click(function () {
+        var searchName = $('#searchInput').val().trim(); // 获取搜索框中的值并去除空白字符
+        $('#productTable tbody').empty(); // 清空已有商品信息行
+        products.forEach(function (product, index) { // 遍历商品数组
+          if (product.name.includes(searchName)) { // 检查商品名称是否包含搜索词
+            addProductRow(index); // 如果包含，则添加该行到表格中
+            // console.log(products);
+          }
+        });
+      });
+
+      // 动态添加表格行
+      function addProductRow(index) {
+        var product = products[index]; // 获取指定索引处的商品信息
+        var newRow = '<tr>' +
+          '<td>' + product.name + '</td>' +
+          '<td>' + product.price + '</td>' +
+          '<td>' + product.stock + '</td>' +
+          '<td><img src="' + product.imageUrl + '" alt="Product Image" style="max-width:50px;"></td>' +
+          '<td><button class="delete">删除</button></td>' +
+          '</tr>';
+
+        $('#productTable tbody').append(newRow); // 将新的表格行添加到表格的 tbody 中
+
+        // 删除按钮点击事件处理
+        $('.delete').last().click(function () {
+          var deletedStock = product.stock; // 获取要删除的商品的库存
+          totalStock -= deletedStock; // 更新总库存
+          $('#totalStock').text(totalStock); // 更新页面上的总库存显示
+          $(this).closest('tr').remove(); // 移除当前行
+
+          // 更新总库存
+          products.splice(index, 1); // 从数组中移除已删除的商品
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

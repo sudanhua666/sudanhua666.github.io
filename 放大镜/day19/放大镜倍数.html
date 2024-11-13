@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      display: flex;
+    }
+
+    .fdj {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      /* background-color: red; */
+      cursor: zoom-in;
+    }
+
+    .mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 200px;
+      background-image: url(./images/mask-bg.png);
+      /* background-color: #b63030; */
+    }
+
+    .fdj img {
+      width: 400px;
+      height: 400px;
+    }
+
+    .fd {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      overflow: hidden;
+      margin-left: 10px;
+      /* background-color: red; */
+    }
+
+    .fd img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 800px;
+      height: 800px;
+
+    }
+
+    .box2 {
+      display: flex;
+      width: 400px;
+      height: 70px;
+      /* background-color: skyblue; */
+    }
+
+    .t {
+      width: 70px;
+      height: 70px;
+      margin-left: 10px;
+      background-color: pink;
+    }
+
+    .t img {
+      width: 70px;
+      height: 70px;
+    }
+
+    select {
+      width: 100px;
+      height: 100px;
+      margin-left: 150px;
+      margin-top: 20px;
+      /* background-color: skyblue; */
+      background: linear-gradient(to right, skyblue, pink);
+      border: 1px solid white;
+      border-radius: 80px;
+      text-align: center;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="fdj active">
+      <img src="./images/banner1.jpg" alt="">
+      <div class="mask"> </div>
+    </div>
+    <div class="fd">
+      <img src="./images/banner1.jpg" alt="">
+    </div>
+  </div>
+  <div class="box2">
+    <div class="t active"><img src="./images/banner1.jpg" alt=""></div>
+    <div class="t"><img src="./images/banner2.jpg" alt=""></div>
+    <div class="t"><img src="./images/banner3.jpg" alt=""></div>
+    <div class="t"><img src="./images/banner4.jpg" alt=""></div>
+    <div class="t"><img src="./images/banner5.jpg" alt=""></div>
+  </div>
+  <select name="" id="Select">
+    <option value="">请选择</option>
+    <option value="2" selected>2倍</option>
+    <option value="3">3倍</option>
+    <option value="4">4倍</option>
+  </select>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const t = document.querySelectorAll('.t')
+      const fdj = document.querySelector('.fdj')
+      const mask = document.querySelector('.mask')
+      const fd = document.querySelector('.fd img')
+      const selectElement = document.getElementById('Select');
+
+      selectElement.addEventListener('change', function () {
+        const zoomFactor = parseInt(this.value, 10);
+        applyZoom(zoomFactor);
+      });
+
+      function applyZoom(zoomFactor) {
+        // 保持盒子大小不变，调整图片尺寸
+        const baseWidth = 400; // 基础宽度
+        const baseHeight = 400; // 基础高度
+        const md = 100; //mask描点
+        const newWidth = baseWidth * zoomFactor;
+        const newHeight = baseHeight * zoomFactor;
+        const newWidth2 = baseWidth / zoomFactor;
+        const newHeight2 = baseHeight / zoomFactor;
+        const newmd = -25 * zoomFactor + 150
+        fd.style.width = `${newWidth}px`;
+        fd.style.height = `${newHeight}px`;
+        mask.style.width = `${newWidth2}px`;
+        mask.style.height = `${newHeight2}px`;
+        fdj.addEventListener('mousemove', function (event) {
+          let x = event.clientX - fdj.offsetLeft
+          let y = event.clientY - fdj.offsetTop
+          let maskX = x - newmd;
+          let maskY = y - newmd;
+          if (maskX < 0) {
+            maskX = 0;
+          }
+          if (maskX > fdj.offsetWidth - mask.offsetWidth) {
+            maskX = fdj.offsetWidth - mask.offsetWidth
+          }
+          if (maskY < 0) {
+            maskY = 0;
+          }
+          if (maskY > fdj.offsetHeight - mask.offsetHeight) {
+            maskY = fdj.offsetHeight - mask.offsetHeight
+          }
+          mask.style.left = maskX + "px";
+          mask.style.top = maskY + "px";
+          // mask左上角的位置
+          fd.style.left = -maskX * zoomFactor + 'px';
+          fd.style.top = -maskY * zoomFactor + 'px';
+
+        });
+        mask.style.left = `${newmd}px`;
+        mask.style.top = `${newmd}px`;
+
+      }
+      for (let i = 0; i < t.length; i++) {
+        t[i].addEventListener('click', function () {
+          const imgsrc = t[i].querySelector('img').src;
+          fdj.querySelector('img').src = imgsrc;
+          fd.src = imgsrc;
+
+        })
+
+      }
+
+      fdj.addEventListener('mousemove', function (event) {
+        //  console.log(event.clientX);
+        let x = event.clientX - fdj.offsetLeft
+        let y = event.clientY - fdj.offsetTop
+
+        // console.log(x, y);
+        let maskX = x - 100;
+        let maskY = y - 100;
+        if (maskX < 0) {
+          maskX = 0;
+        }
+        if (maskX > fdj.offsetWidth - mask.offsetWidth) {
+          maskX = fdj.offsetWidth - mask.offsetWidth
+        }
+        if (maskY < 0) {
+          maskY = 0;
+        }
+        if (maskY > fdj.offsetHeight - mask.offsetHeight) {
+          maskY = fdj.offsetHeight - mask.offsetHeight
+        }
+        mask.style.left = maskX + "px";
+        mask.style.top = maskY + "px";
+        // mask左上角的位置
+        fd.style.left = -maskX * 2 + 'px';
+        fd.style.top = -maskY * 2 + 'px';
+        //  console.log(x , y);
+
+      });
+    });
+  </script>
+</body>
+
+</html>
