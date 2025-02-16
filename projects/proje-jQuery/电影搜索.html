@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="jQuery/jquery.min.js"></script>
+</head>
+<style>
+  li {
+    list-style: none;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  li p {
+    width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: no-wrap;
+  }
+
+  .poster {
+    width: 350px;
+    height: 350px;
+  }
+
+  .inp {
+    width: 300px;
+    height: 50px;
+    margin: 0 auto;
+    display: block;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+</style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="search">
+      <input class="inp" type="text" placeholder="请输入要搜索的电影">
+
+    </div>
+    <div class="search-result">
+
+
+
+    </div>
+  </div>
+</body>
+<script>
+  var $inp = $('.inp')
+  var $result = $('.search-result')
+
+  $inp.keydown(function (e) {
+
+    if (e.keyCode === 13 && $inp.val() !== '') {
+      // console.log(1);
+
+      var xhr = new XMLHttpRequest()
+      xhr.open('get', 'https://apis.netstart.cn/maoyan/search/movies?keyword=' + $inp.val() + '&ci=1')
+
+      xhr.onreadystatechange = (function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var list = JSON.parse(xhr.responseText)
+          console.log(list);
+          var $ul = $('<ul></ul>')
+          list.forEach(element => {
+            var $li = $(`
+            <li>
+                <img class='poster' src="${element.poster}" alt="">
+                <p>${element.name}</p>
+            </li>
+            `)
+            $ul.append($li)
+          });
+
+          $result.html($ul)
+
+        }
+
+      })
+      xhr.send()
+    }
+
+
+  })
+
+
+
+
+
+</script>
+
+</html>

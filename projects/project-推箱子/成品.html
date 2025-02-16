@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/推箱子.css">
+</head>
+
+<body>
+  <script src="js/mapdata.js"></script>
+  <script>
+    var index = +prompt('请输入1-100以内的关卡');
+    level = levels[index - 1]
+    var htmlStr = "<div class='box'>";
+    for (var i = 0; i < level.length; i++) {
+      htmlStr += '<div class="row">';
+      for (var j = 0; j < level[i].length; j++) {
+
+        switch (level[i][j]) {
+          case 0:
+            htmlStr += '<div class="item"></div>'
+            break;
+          case 1:
+            htmlStr +='<div class="item"><div class="wall"></div></div>'
+            break;
+          case 2:
+            htmlStr += '<div class="item"><div class="ball"></div></div>'
+            break;
+          case 3:
+            htmlStr += '<div class="box1"></div>'
+            break;
+          case 4:
+            htmlStr += '<div class="item"><div class="down"></div></div>'
+            break;
+          case 5:
+            htmlStr += '<div class="box1"></div>'
+            break;
+        }
+      }
+      htmlStr += '</div>'
+    }
+
+    htmlStr += "</div>"
+    document.write(htmlStr);
+  </script>
+</body>
+
+</html>

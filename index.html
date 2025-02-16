@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的 GitHub 作品集</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <!-- 头部 -->
+  <header>
+    <h1>我的作品集</h1>
+  </header>
+
+  <!-- 主体内容 -->
+  <div class="container">
+    <!-- 左侧选项卡 -->
+    <div class="tab-container">
+      <ul>
+        <li class="active" data-target="profile">个人信息</li>
+        <li data-target="demos">demo
+          <ul class="submenu">
+            <li data-target="demo1">JavaScript</li>
+            <li data-target="demo2">JQuery</li>
+            <li data-target="demo3">CSS</li>
+            <li data-target="demo4">Demo 4</li>
+          </ul>
+        </li>
+        <li data-target="projects">项目展示</li>
+      </ul>
+    </div>
+
+    <!-- 右侧内容 -->
+    <div class="content-container">
+      <!-- 个人信息 -->
+      <div id="profile" class="content active">
+        <div class="profile">
+          <img src="images/蓝底照.jpg" alt="头像" class="avatar">
+          <div class="profile-info">
+            <h2>苏丹华</h2>
+            <p>成为一名优秀的前端开发工程师</p>
+            <p> 现居城市：广州</p>
+            <p> 邮箱：2194214179@qq.com</p>
+            <div class="skills">
+              <h3>技术栈</h3>
+              <p>JavaScript · HTML · CSS · Vue ·微信小程序 · React · Node.js</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo 列表 -->
+      <!-- 添加子菜单对应的内容区域 -->
+      <!-- 添加子菜单对应的内容区域 -->
+      <div id="demo1" class="content">
+        <div class="grid-container">
+          <a href="projects/project-推箱子/成品.html" class="grid-item" target="_blank">
+            <div>
+              <img src="images/推箱子.png" alt="推箱子">
+              <h2>推箱子关卡选择</h2>
+            </div>
+          </a>
+
+          <a href="projects/project-拼图/拼图.html" class="grid-item" target="_blank">
+            <div>
+              <img src="images/1.webp" alt="拼图游戏">
+              <h2>拼图游戏</h2>
+            </div>
+          </a>
+
+          <a href="projects/projects-柒品商城/柒品商城.html" class="grid-item" target="_blank">
+            <div>
+              <img src="images/柒品商城.png" alt="柒品商城">
+              <h2>柒品商城</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div id="demo2" class="content">
+        <div class="grid-container">
+          <a href="projects/proje-jQuery/电影搜索.html" class="grid-item" target="_blank">
+            <div>
+              <img src="images/搜索.png" alt="">
+              <h2>电影搜索</h2>
+            </div>
+          </a>
+          <a href="projects/proje-jQuery/商品管理系统.html" class="grid-item" target="_blank">
+            <div>
+              <img src="" alt="">
+              <h2>商品管理</h2>
+            </div>
+          </a>
+          <a href="projects/proje-jQuery/电梯.html" class="grid-item" target="_blank">
+            <div>
+              <img src="" alt="">
+              <h2>电梯导航</h2>
+            </div>
+          </a>
+          <a href="projects/proje-jQuery/jq实现手风琴.html" class="grid-item" target="_blank">
+            <div>
+              <img src="" alt="">
+              <h2>手风琴</h2>
+            </div>
+          </a>
+        </div>
+        
+      </div>
+
+      <div id="demo3" class="content">
+        <div class="grid-container">
+          <a href="projects/project-CSS3/3d.html" class="grid-item">
+            <div>
+              <img src="" alt="">
+              <h2>CSS3动画</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div id="demo4" class="content">
+        <div class="grid-container">
+          <a href="projects/project-bootstrap/index.html" class="grid-item">
+            <div>
+              <img src="" alt="">
+              <h2>bootstrap页面</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 项目展示 -->
+      <div id="projects" class="content">
+        <h2>我的项目</h2>
+        <div class="project-list">
+          <div class="project">
+            <img src="" alt="个人博客">
+            <h3>个人博客系统</h3>
+            <p>Vue + Node.js + MongoDB 全栈项目</p>
+            <a href="#" target="_blank">查看源码</a>
+          </div>
+          <div class="project">
+            <img src="" alt="在线商城">
+            <h3>电商平台</h3>
+            <p>React + Redux + Express 开发</p>
+            <a href="#" target="_blank">查看源码</a>
+          </div>
+          <div class="project">
+            <img src="" alt="任务管理">
+            <h3>团队协作工具</h3>
+            <p>基于 Flask 的任务管理系统</p>
+            <a href="#" target="_blank">查看源码</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- 页脚 -->
+  <footer>
+    <p>&copy; 2023 我的作品集 · Built with ❤️</p>
+  </footer>
+
+
+</body>
+<script src="index.js"></script>
+
+</html>

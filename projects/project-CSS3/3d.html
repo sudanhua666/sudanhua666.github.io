@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      perspective: 800px;
+      /* 设置透视效果 */
+    }
+
+    .cube {
+      padding-top: 200px;
+      margin: 0 auto;
+      position: relative;
+      width: 200px;
+      height: 200px;
+      font-size: 20px;
+      text-align: center;
+      line-height: 200px;
+      transform-style: preserve-3d;
+      /* 使子元素保持3D空间 */
+      animation: spin 6s infinite linear;
+      /* 添加旋转动画 */
+    }
+
+    .face {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+    }
+
+    .front {
+      background-color: red;
+      transform: translateZ(100px);
+      /* 移动到观察者面前 */
+    }
+
+    .back {
+      background-color: blue;
+      transform: rotateY(180deg) translateZ(100px);
+    }
+
+    .right {
+      background-color: green;
+      transform: rotateY(90deg) translateZ(100px);
+    }
+
+    .left {
+      background-color: yellow;
+      transform: rotateY(-90deg) translateZ(100px);
+    }
+
+    .top {
+      background-color: purple;
+      transform: rotateX(90deg) translateZ(100px);
+    }
+
+    .bottom {
+      background-color: orange;
+      transform: rotateX(-90deg) translateZ(100px);
+    }
+
+    /* 动画定义 */
+    @keyframes spin {
+      from {
+        transform: rotate3d(0, 0, 0, 0deg);
+      }
+
+      to {
+        transform: rotate3d(1, 1, 1, 360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cube">
+    <div class="face front">1</div>
+    <div class="face back">2</div>
+    <div class="face right">3</div>
+    <div class="face left">4</div>
+    <div class="face top">5</div>
+    <div class="face bottom">6</div>
+  </div>
+</body>
+
+</html>
