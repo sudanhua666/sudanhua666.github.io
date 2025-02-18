@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // 显示当前子菜单
         submenu.style.display = 'block';
         this.classList.add('active');
+
+        // 默认显示第一个子菜单项的内容
+        const firstSubItem = submenu.querySelector('li');
+        if (firstSubItem) {
+          firstSubItem.click(); // 触发第一个子菜单项的点击事件
+        }
       } else {
         // 如果没有子菜单，直接显示对应内容
         const target = this.dataset.target;
